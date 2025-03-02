@@ -1,0 +1,13 @@
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/dtos/StandardResponse.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/UserService.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/dtos/GetUserOutput.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/UserDAOInMemory.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/UserLogin.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/dtos/UserRegisterInput.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/exceptions/UserUnauthorizedException.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/dtos/StatusReponse.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/UserRegister.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/UserDAO.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/User.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/exceptions/NotFoundException.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/Main.java

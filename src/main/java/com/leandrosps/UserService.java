@@ -2,7 +2,6 @@ package com.leandrosps;
 
 import java.util.List;
 import com.leandrosps.dtos.GetUserOutput;
-import com.leandrosps.exceptions.NotFoundException;
 
 public class UserService {
     
@@ -13,19 +12,17 @@ public class UserService {
     }
 
     public GetUserOutput getUser(String id) {
-        var user = this.userDAO.getStorage().stream().filter(userOp -> userOp.getId().toString().equals(id))
-                .findFirst().orElseThrow(() -> new NotFoundException("User Not Exists!"));
+        var user = this.userDAO.getUser(id);
         return new GetUserOutput(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
     }
 
     public void deletUser(String id) {
-        var user = this.userDAO.getStorage().stream().filter(userOp -> userOp.getId().toString().equals(id))
-                .findFirst().orElseThrow(() -> new NotFoundException("User Not Exists!"));
-        userDAO.getStorage().remove(userDAO.getStorage().indexOf(user));
+        var user = this.userDAO.getUser(id);
+        userDAO.delete(user.getId().toString());
     }
 
     public List<GetUserOutput> list() {
-        return this.userDAO.getStorage().stream()
+        return this.userDAO.list().stream()
                 .map(user -> new GetUserOutput(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail()))
                 .toList();
     }
