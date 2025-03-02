@@ -1,7 +1,8 @@
-package com.leandrosps;
+package com.leandrosps.application;
 
 import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
+import com.leandrosps.infra.UserDAO;
 
 public class UserRegister {
 

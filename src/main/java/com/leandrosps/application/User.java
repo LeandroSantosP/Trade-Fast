@@ -1,4 +1,4 @@
-package com.leandrosps;
+package com.leandrosps.application;
 
 import java.util.UUID;
 import at.favre.lib.crypto.bcrypt.BCrypt;

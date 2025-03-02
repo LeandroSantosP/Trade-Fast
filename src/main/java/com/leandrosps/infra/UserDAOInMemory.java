@@ -1,9 +1,11 @@
-package com.leandrosps;
+package com.leandrosps.infra;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.leandrosps.application.User;
 import com.leandrosps.exceptions.NotFoundException;
 import lombok.Getter;
 

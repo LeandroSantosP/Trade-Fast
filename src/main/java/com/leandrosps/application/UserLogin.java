@@ -1,4 +1,6 @@
-package com.leandrosps;
+package com.leandrosps.application;
+
+import com.leandrosps.infra.UserDAO;
 
 public class UserLogin {
 

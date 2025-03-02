@@ -1,7 +1,9 @@
-package com.leandrosps;
+package com.leandrosps.application;
 
 import java.util.List;
+
 import com.leandrosps.dtos.GetUserOutput;
+import com.leandrosps.infra.UserDAO;
 
 public class UserService {
     

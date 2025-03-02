@@ -1,4 +1,7 @@
 package com.leandrosps.dtos;
 
-public record UserRegisterInput(String fristName, String lastName, String email, String password) {
+import lombok.NonNull;
+
+public record UserRegisterInput(@NonNull String fristName, @NonNull String lastName, @NonNull String email,
+        @NonNull String password) {
 }

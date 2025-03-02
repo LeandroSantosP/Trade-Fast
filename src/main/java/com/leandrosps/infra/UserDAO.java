@@ -1,7 +1,9 @@
-package com.leandrosps;
+package com.leandrosps.infra;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.leandrosps.application.User;
 
 public interface UserDAO {
     User getUser(String id);

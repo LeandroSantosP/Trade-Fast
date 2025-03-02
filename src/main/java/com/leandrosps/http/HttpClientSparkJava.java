@@ -6,6 +6,8 @@ import com.leandrosps.dtos.StatusReponse;
 import com.leandrosps.exceptions.NotFoundException;
 import com.leandrosps.exceptions.UserUnauthorizedException;
 
+import spark.Request;
+import spark.Response;
 import spark.Service;
 
 public class HttpClientSparkJava implements HttpClient {
@@ -58,16 +60,21 @@ public class HttpClientSparkJava implements HttpClient {
             response.body(exception.getMessage());
         });
 
+        http.exception(RuntimeException.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
+        });
+
         http.exception(Exception.class, (exception, request, response) -> {
+            System.out.println(exception.getClass());
             response.status(500);
             response.body("Internal Server Error: " + exception.getMessage());
         });
     }
 
-    private Object handleRequest(Callback callback, spark.Request req, spark.Response res) {
+    private Object handleRequest(Callback callback, Request req, Response res) {
         var output = callback.handle(req.params(), req.body());
         res.type("application/json");
         return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output)));
     }
-
 }
