@@ -11,26 +11,28 @@ import com.leandrosps.exceptions.UserUnauthorizedException;
 
 public class Main {
 
-    private static UserRegister userRegister = new UserRegister();
+    private static UserDAO userDAO = new UserDAO();
+    private static UserService userService = new UserService(userDAO);
 
     public static void main(String[] args) {
         port(3001);
         post("/auth/register", (req, res) -> {
             res.type("application/json");
             var input = new Gson().fromJson(req.body(), UserRegisterInput.class);
-            var output = userRegister.register(input);
+            UserRegister userRegister = new UserRegister(userDAO);
+            var output = userRegister.excute(input);
             return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, output.toString()));
         });
 
         get("/auth/:user_id", (req, res) -> {
             var user_id = req.params(":user_id");
-            var output = userRegister.getUser(user_id);
+            var output = userService.getUser(user_id);
             return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output)));
         });
 
         get("/auth/list/all", (req, res) -> {
             return new Gson()
-                    .toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(userRegister.list())));
+                    .toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(userService.list())));
         });
 
         exception(UserUnauthorizedException.class, (exception, request, response) -> {
