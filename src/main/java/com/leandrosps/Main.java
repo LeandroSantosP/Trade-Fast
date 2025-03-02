@@ -1,54 +1,32 @@
 package com.leandrosps;
 
 import com.google.gson.Gson;
-import com.leandrosps.dtos.StandardResponse;
-import com.leandrosps.dtos.StatusReponse;
 import com.leandrosps.dtos.UserRegisterInput;
-import com.leandrosps.exceptions.NotFoundException;
-import com.leandrosps.exceptions.UserUnauthorizedException;
-
-import spark.Service;
+import com.leandrosps.http.HttpClient;
+import com.leandrosps.http.HttpClientSparkJava;
+import com.leandrosps.http.HttpMethods;
 
 public class Main {
 
-    private static UserDAO userDAO = new UserDAOInMemory();
+    private static UserDAOInMemory userDAO = new UserDAOInMemory();
     private static UserService userService = new UserService(userDAO);
+    private static HttpClient http = new HttpClientSparkJava();
 
     public static void main(String[] args) {
-        var http = Service.ignite();
-        http.port(3001);
-        http.post("/auth/register", (req, res) -> {
-            res.type("application/json");
-            var input = new Gson().fromJson(req.body(), UserRegisterInput.class);
+        http.lisen(3001);
+        http.on(HttpMethods.POST, "/auth/register", (params, data) -> {
+            var input = new Gson().fromJson(data, UserRegisterInput.class);
             UserRegister userRegister = new UserRegister(userDAO);
-            var output = userRegister.excute(input);
-            return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, output.toString()));
+            return userRegister.excute(input);
         });
 
-        http.get("/auth/:user_id", (req, res) -> {
-            var user_id = req.params(":user_id");
-            var output = userService.getUser(user_id);
-            return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output)));
+        http.on(HttpMethods.GET, "/auth/:user_id", (params, data) -> {
+            var user_id = params.get(":user_id");
+            return userService.getUser(user_id);
         });
 
-        http.get("/auth/list/all", (req, res) -> {
-            return new Gson()
-                    .toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(userService.list())));
-        });
-
-        http.exception(UserUnauthorizedException.class, (exception, request, response) -> {
-            response.status(exception.getStatus());
-            response.body( exception.getMessage());
-        });
-
-        http.exception(NotFoundException.class, (exception, request, response) -> {
-            response.status(exception.getStatus());
-            response.body( exception.getMessage());
-        });
-
-        http.exception(Exception.class, (exception, request, response) -> {
-            response.status(500);
-            response.body("Internal Server Error: " + exception.getMessage());
+       http.on(HttpMethods.GET,"/auth/list/all", (req, res) -> {
+            return userService.list();
         });
     }
 }

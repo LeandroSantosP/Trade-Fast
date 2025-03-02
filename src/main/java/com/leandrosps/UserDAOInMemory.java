@@ -35,8 +35,8 @@ public class UserDAOInMemory implements UserDAO {
 
     @Override
     public User getUser(String id) {
-        var userUp = this.storage.stream().filter(user -> user.getEmail().equals(id))
-                .findFirst();
+        var userUp = this.storage.stream().filter(user -> user.getId().toString().equals(id))
+        .findFirst();
         if (!userUp.isPresent()) {
             throw new NotFoundException("User Not Found!");
         }
