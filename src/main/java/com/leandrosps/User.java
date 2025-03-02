@@ -1,6 +1,7 @@
 package com.leandrosps;
 
 import java.util.UUID;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,8 +13,11 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private Integer salt;
 
     public static User create(String fristName, String lastName, String email, String password) {
-        return new User(UUID.randomUUID(), fristName, lastName, email, password);
+        var salt = 11;
+        var passwordEncrypt = BCrypt.withDefaults().hashToString(salt, password.toCharArray());
+        return new User(UUID.randomUUID(), fristName, lastName, email, passwordEncrypt, salt);
     }
 }
