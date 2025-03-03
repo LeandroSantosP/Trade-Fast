@@ -1,38 +1,20 @@
 package com.leandrosps;
 
-import com.google.gson.Gson;
-import com.leandrosps.application.UserRegister;
 import com.leandrosps.application.UserService;
-import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.http.HttpClient;
-import com.leandrosps.http.HttpClientSparkJava;
-import com.leandrosps.http.HttpMethods;
+import com.leandrosps.http.SparkJavaAdapter;
+import com.leandrosps.infra.AuthController;
 import com.leandrosps.infra.UserDAOInMemory;
 
-
+/* Entry Point */
 public class Main {
 
     private static UserDAOInMemory userDAO = new UserDAOInMemory();
     private static UserService userService = new UserService(userDAO);
-    private static HttpClient http = new HttpClientSparkJava();
+    private static HttpClient http = new SparkJavaAdapter();
 
     public static void main(String[] args) {
-
         http.lisen(3001);
-        http.on(HttpMethods.POST, "/auth/register", (params, data) -> {
-            var input = new Gson().fromJson(data, UserRegisterInput.class);
-
-            UserRegister userRegister = new UserRegister(userDAO);
-            return userRegister.excute(input);
-        });
-
-        http.on(HttpMethods.GET, "/auth/:user_id", (params, data) -> {
-            var user_id = params.get(":user_id");
-            return userService.getUser(user_id);
-        });
-
-        http.on(HttpMethods.GET, "/auth/list/all", (req, res) -> {
-            return userService.list();
-        });
+        new AuthController(http, userService, userDAO);
     }
 }

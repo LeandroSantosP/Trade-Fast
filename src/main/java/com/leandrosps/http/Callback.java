@@ -2,7 +2,8 @@ package com.leandrosps.http;
 
 import java.util.Map;
 
+
 @FunctionalInterface
 public interface Callback {
-     public Object handle(Map<String, String> params, String data);
+     public HandlerOutput handle(Map<String, String> params, String data);
 }

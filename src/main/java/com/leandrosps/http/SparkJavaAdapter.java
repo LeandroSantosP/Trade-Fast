@@ -10,11 +10,11 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
-public class HttpClientSparkJava implements HttpClient {
+public class SparkJavaAdapter implements HttpClient {
 
     private Service http;
 
-    public HttpClientSparkJava() {
+    public SparkJavaAdapter() {
         this.http = Service.ignite();
         this.handleExceptions();
     }
@@ -22,6 +22,7 @@ public class HttpClientSparkJava implements HttpClient {
     @Override
     public void lisen(Integer port) {
         this.http.port(port);
+        System.out.println("🚀 Server running on Port -> " + port);
     }
 
     @Override
@@ -66,15 +67,15 @@ public class HttpClientSparkJava implements HttpClient {
         });
 
         http.exception(Exception.class, (exception, request, response) -> {
-            System.out.println(exception.getClass());
             response.status(500);
             response.body("Internal Server Error: " + exception.getMessage());
         });
     }
 
-    private Object handleRequest(Callback callback, Request req, Response res) {
+    private String handleRequest(Callback callback, Request req, Response res) {
         var output = callback.handle(req.params(), req.body());
         res.type("application/json");
-        return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output)));
+        res.status(output.status());
+        return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output.data())));
     }
 }

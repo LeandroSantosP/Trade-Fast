@@ -20,4 +20,8 @@ public class User {
         var passwordEncrypt = BCrypt.withDefaults().hashToString(salt, password.toCharArray());
         return new User(UUID.randomUUID(), fristName, lastName, email, passwordEncrypt, salt);
     }
+
+    public boolean isPasswordValid(String rawPassword) {
+        return BCrypt.verifyer().verify(rawPassword.toCharArray(), this.getPassword().toCharArray()).verified;
+    }
 }
