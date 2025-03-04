@@ -5,6 +5,7 @@ import com.leandrosps.dtos.StandardResponse;
 import com.leandrosps.dtos.StatusReponse;
 import com.leandrosps.exceptions.NotFoundException;
 import com.leandrosps.exceptions.UserUnauthorizedException;
+import com.leandrosps.http.filters.CustomFilter;
 
 import spark.Request;
 import spark.Response;
@@ -51,6 +52,7 @@ public class SparkJavaAdapter implements HttpClient {
     }
 
     private void handleExceptions() {
+
         http.exception(UserUnauthorizedException.class, (exception, request, response) -> {
             response.status(exception.getStatus());
             response.body(exception.getMessage());
@@ -73,9 +75,16 @@ public class SparkJavaAdapter implements HttpClient {
     }
 
     private String handleRequest(Callback callback, Request req, Response res) {
-        var output = callback.handle(req.params(), req.body());
+        var output = callback.handle(req.params(), req.body(), req.attribute("user_id"));
         res.type("application/json");
         res.status(output.status());
         return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output.data())));
+    }
+
+    @Override
+    public void registerFilter(String path, CustomFilter customFilter) {
+        this.http.before(path, (request, response) -> {
+            customFilter.handle(request, response, this.http);
+        });
     }
 }

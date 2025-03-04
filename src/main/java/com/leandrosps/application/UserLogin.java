@@ -1,23 +1,18 @@
 package com.leandrosps.application;
 
+import com.leandrosps.application.TokenHandler.TokenValidationResult;
 import com.leandrosps.dtos.UserLoginOuput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
 import com.leandrosps.infra.UserDAO;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.AeadAlgorithm;
-import java.security.KeyPair;
-import java.time.Instant;
-import java.util.Date;
-
-import javax.crypto.SecretKey;
-
 public class UserLogin {
 
     private UserDAO userDAO;
+    private TokenHandler tokenHandler;
 
-    public UserLogin(UserDAO userDAO) {
+    public UserLogin(UserDAO userDAO, TokenHandler tokenHandler) {
         this.userDAO = userDAO;
+        this.tokenHandler = tokenHandler;
     }
 
     public UserLoginOuput excute(String email, String password) {
@@ -33,25 +28,17 @@ public class UserLogin {
             throw new UserUnauthorizedException("Passoword or email is invalid!!");
         }
 
-        /* Use RSA or basic secrety? */
-        SecretKey key = Jwts.SIG.HS256.key().build();
+        var generateTokenOutput = this.tokenHandler.generateToken(user.getId().toString(), user.getEmail());
 
-        Instant expiredAtInst = Instant.now().plusSeconds(300L);
-        Date expiryDate = Date.from(expiredAtInst);
+        return new UserLoginOuput(generateTokenOutput.token(), generateTokenOutput.expiredAt());
+    }
 
-        KeyPair pair = Jwts.SIG.RS512.keyPair().build();
-        AeadAlgorithm enc = Jwts.ENC.A256GCM;
-
-        String jws = Jwts.builder()
-                .issuer("skp.Tridimensional@gmail.com")
-                .subject(user.getId().toString())
-                .claim("user_email", user.getEmail())
-                .expiration(expiryDate)
-                //.signWith(key)
-                .encryptWith(pair.getPublic(), Jwts.KEY.RSA_OAEP_256, enc)
-                .compact();
-
-        return new UserLoginOuput(jws, expiryDate);
+    public TokenValidationResult validatedUserAuth(String token) {
+        var result = this.tokenHandler.tokenValidation(token);
+        if (!result.isValid()) {
+            throw new RuntimeException(result.message());
+        }
+        return result;
     }
 
 }

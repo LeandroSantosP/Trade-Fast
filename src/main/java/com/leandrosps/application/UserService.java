@@ -13,8 +13,13 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public GetUserOutput getUser(String id) {
-        var user = this.userDAO.getUser(id);
+    public GetUserOutput getUser(String id_from, String id_to) {
+        var user = this.userDAO.getUser(id_from);
+
+        if (!user.getId().toString().equals(id_to)) {
+            throw new RuntimeException("User has no authorized to this operation!");
+        }
+        
         return new GetUserOutput(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
     }
 
