@@ -17,15 +17,20 @@ public class AuthControllerTest {
 
     private static String BASE_URL = "http://localhost:3001";
 
+    public record DataLoginResponse(String token, Object expiredAt) {
+    }
+
+    public record LoginRsponse(String status, DataLoginResponse data) {
+    }
+
     @Test
     void shouldAuthenticatAnNewUser() throws IOException {
-        
+
         /* Register */
 
         var client = new OkHttpClient();
 
         var bodyRegister = new Gson().toJson(new UserRegisterInput("William", "Dow", "will123@email.com", "senha123"));
-
         var inputRegister = RequestBody.create(bodyRegister, MediaType.parse("application/json"));
 
         HttpUrl.Builder urlBuilderRegister = HttpUrl.parse(BASE_URL.concat("/auth/register")).newBuilder();
@@ -49,15 +54,18 @@ public class AuthControllerTest {
         var inputLogin = RequestBody.create(bodyLogin, MediaType.parse("application/json"));
 
         Request requestLogin = new Request.Builder()
-        .url(BASE_URL.concat("/auth/signin"))
-        .post(inputLogin)
-        .build();
+                .url(BASE_URL.concat("/auth/singin"))
+                .post(inputLogin)
+                .build();
 
         Response responseLogin = assertDoesNotThrow(() -> client.newCall(requestLogin).execute());
-        var outputLogin = new Gson().fromJson(responseLogin.body().string(), StandardResponse.class);
 
-        assertNotNull(outputLogin.getData());
-        assertEquals(200, outputLogin.getStatus());
-        assertEquals("Authenticated!", outputLogin.getMessage());
+        var outputLogin = new Gson().fromJson(responseLogin.body().string(), LoginRsponse.class);
+
+        assertEquals(201, responseLogin.code());
+        assertNotNull(outputLogin.data().token());
+        assertNotNull(outputLogin.data().expiredAt());
+        assertEquals("SUCCESS", outputLogin.status());
     }
+
 }

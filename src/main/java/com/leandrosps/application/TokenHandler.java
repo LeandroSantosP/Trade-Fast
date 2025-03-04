@@ -11,7 +11,6 @@ import java.util.Base64;
 import java.util.Date;
 
 import com.leandrosps.dtos.GenerateTokenOutput;
-
 import io.jsonwebtoken.Jwts;
 import spark.resource.ClassPathResource;
 
@@ -35,9 +34,7 @@ public class TokenHandler {
             .signWith(privateKey, Jwts.SIG.RS256)
             .compact();
 
-      var result = this.tokenValidation(jws); /* Ought to be valid */
-
-      System.out.println("VALID TOKEN: " + result.message());
+      this.tokenValidation(jws); /* Ought to be valid */
 
       return new GenerateTokenOutput(jws, expiryDate);
    }
@@ -85,7 +82,6 @@ public class TokenHandler {
 
          return keyFactory.generatePrivate(keySpec);
       } catch (Exception e) {
-         System.out.println("HERE: " + e.getMessage());
          e.printStackTrace();
          throw new RuntimeException("Error on load Private Keys!: " + e.getMessage());
       }
@@ -108,7 +104,6 @@ public class TokenHandler {
          var keyFactory = KeyFactory.getInstance("RSA");
          return keyFactory.generatePublic(keySpec);
       } catch (Exception e) {
-         System.out.println("HERE: " + e.getMessage());
          e.printStackTrace();
          throw new RuntimeException("Error on load Public Keys!: " + e.getMessage());
       }
