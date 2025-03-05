@@ -1,4 +1,4 @@
-package com.leandrosps.infra;
+package com.leandrosps.infra.database;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ public class UserDAOInMemory implements UserDAO {
 
     @Override
     public void delete(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        var user = this.getUser(id);
+        this.storage.remove(user);
     }
 
     /* Querys */

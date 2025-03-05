@@ -1,4 +1,4 @@
-package com.leandrosps.http.filters;
+package com.leandrosps.infra.http.filters;
 
 
 import spark.Request;

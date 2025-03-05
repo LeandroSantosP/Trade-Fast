@@ -3,7 +3,7 @@ package com.leandrosps.application;
 import java.util.List;
 
 import com.leandrosps.dtos.GetUserOutput;
-import com.leandrosps.infra.UserDAO;
+import com.leandrosps.infra.database.UserDAO;
 
 public class UserService {
     

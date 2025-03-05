@@ -1,6 +1,6 @@
-package com.leandrosps.http;
+package com.leandrosps.infra.http;
 
-import com.leandrosps.http.filters.CustomFilter;
+import com.leandrosps.infra.http.filters.CustomFilter;
 
 public interface HttpClient {
     public void on(HttpMethods method, String path, Callback callback);

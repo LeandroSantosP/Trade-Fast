@@ -1,4 +1,4 @@
-package com.leandrosps.infra;
+package com.leandrosps.infra.database;
 
 import java.util.List;
 import java.util.Optional;

@@ -8,7 +8,9 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import com.leandrosps.dtos.GenerateTokenOutput;
 import io.jsonwebtoken.Jwts;
@@ -19,16 +21,17 @@ public class TokenHandler {
    public TokenHandler() {
    }
 
-   public GenerateTokenOutput generateToken(String user_id, String user_email) {
+   public GenerateTokenOutput generateToken(String user_id, String user_email, List<String> roles) {
 
       Instant expiredAtInst = Instant.now().plusSeconds(300L);
       Date expiryDate = Date.from(expiredAtInst);
       PrivateKey privateKey = loadPrivateKey();
 
       String jws = Jwts.builder()
-            .issuer("skp.Tridimensional@gmail.com")
+            .issuer("Trade-Fast")
             .subject(user_id)
             .claim("user_email", user_email)
+            .claim("roles", roles)
             .claim("user_id", user_id)
             .expiration(expiryDate)
             .signWith(privateKey, Jwts.SIG.RS256)
@@ -39,7 +42,7 @@ public class TokenHandler {
       return new GenerateTokenOutput(jws, expiryDate);
    }
 
-   public record TokenValidationResult(boolean isValid, String message, String user_id) {
+   public record TokenValidationResult(boolean isValid, String message, String user_id, List<String> roles) {
    }
 
    public TokenValidationResult tokenValidation(String token) {
@@ -50,16 +53,27 @@ public class TokenHandler {
                .build().parseSignedClaims(token).getPayload();
 
          if (payload.isEmpty()) {
-            return new TokenValidationResult(false, "Invalid token", null);
+            return new TokenValidationResult(false, "Invalid token", null, null);
          }
 
          if (payload.getExpiration().toInstant().isBefore(Instant.now())) {
-            return new TokenValidationResult(false, "Token has Expired", null);
+            return new TokenValidationResult(false, "Token has Expired", null, null);
          }
 
-         return new TokenValidationResult(true, "Token is valid", payload.get("user_id").toString());
+         Object rolesObj = payload.get("roles");
+
+         List<String> roles = Collections.emptyList();;
+         
+         if (rolesObj instanceof List<?>) {
+            roles = ((List<?>) rolesObj)
+                  .stream()
+                  .filter(String.class::isInstance)
+                  .map(String.class::cast).toList();
+         } 
+
+         return new TokenValidationResult(true, "Token is valid", payload.get("user_id").toString(), roles);
       } catch (Exception e) {
-         return new TokenValidationResult(false, "Token validation failed: " + e.getMessage(), null);
+         return new TokenValidationResult(false, "Token validation failed: " + e.getMessage(), null, null);
       }
    }
 

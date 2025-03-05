@@ -2,7 +2,7 @@ package com.leandrosps.application;
 
 import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
-import com.leandrosps.infra.UserDAO;
+import com.leandrosps.infra.database.UserDAO;
 
 public class UserRegister {
 

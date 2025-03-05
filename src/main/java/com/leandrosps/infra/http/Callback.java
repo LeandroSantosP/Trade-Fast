@@ -1,4 +1,4 @@
-package com.leandrosps.http;
+package com.leandrosps.infra.http;
 
 import java.util.Map;
 

@@ -3,11 +3,13 @@ package com.leandrosps;
 import com.leandrosps.application.TokenHandler;
 import com.leandrosps.application.UserLogin;
 import com.leandrosps.application.UserService;
-import com.leandrosps.http.HttpClient;
-import com.leandrosps.http.SparkJavaAdapter;
-import com.leandrosps.http.filters.AuthFilter;
-import com.leandrosps.infra.UserController;
-import com.leandrosps.infra.UserDAOInMemory;
+import com.leandrosps.infra.controllers.AuthController;
+import com.leandrosps.infra.controllers.UserController;
+import com.leandrosps.infra.database.UserDAOInMemory;
+import com.leandrosps.infra.http.HttpClient;
+import com.leandrosps.infra.http.SparkJavaAdapter;
+import com.leandrosps.infra.http.filters.AdminFilter;
+import com.leandrosps.infra.http.filters.AuthFilter;
 
 /* Entry Point */
 public class Main {
@@ -20,7 +22,11 @@ public class Main {
 
     public static void main(String[] args) {
         http.lisen(3001);
-        http.registerFilter("/api/priv/*", new AuthFilter(tokenHandler));
+
+        http.registerFilter("/priv/*", new AuthFilter(tokenHandler)); /* Only authenticated users can access */
+        http.registerFilter("/priv/admin/*", new AdminFilter(tokenHandler)); /* Only admins can access */
+
+        new AuthController(http, userService, userLogin, userDAO, tokenHandler);
         new UserController(http, userService, userLogin, userDAO, tokenHandler);
     }
 }

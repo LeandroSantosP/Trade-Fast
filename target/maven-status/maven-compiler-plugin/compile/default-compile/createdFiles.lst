@@ -6,13 +6,7 @@ com/leandrosps/dtos/StandardResponse.class
 com/leandrosps/exceptions/NotFoundException.class
 com/leandrosps/dtos/UserRegisterInput.class
 com/leandrosps/application/User.class
-com/leandrosps/http/SparkJavaAdapter.class
-com/leandrosps/http/HttpClient.class
 com/leandrosps/application/UserLogin.class
-com/leandrosps/http/SparkJavaAdapter$1.class
 com/leandrosps/exceptions/UserUnauthorizedException.class
-com/leandrosps/infra/UserDAO.class
 com/leandrosps/application/UserRegister.class
-com/leandrosps/http/HttpMethods.class
-com/leandrosps/infra/UserDAOInMemory.class
-com/leandrosps/http/Callback.class
+com/leandrosps/infra/http/SparkJavaAdapter$1.class

@@ -1,11 +1,11 @@
-package com.leandrosps.http;
+package com.leandrosps.infra.http;
 
 import com.google.gson.Gson;
 import com.leandrosps.dtos.StandardResponse;
 import com.leandrosps.dtos.StatusReponse;
 import com.leandrosps.exceptions.NotFoundException;
 import com.leandrosps.exceptions.UserUnauthorizedException;
-import com.leandrosps.http.filters.CustomFilter;
+import com.leandrosps.infra.http.filters.CustomFilter;
 
 import spark.Request;
 import spark.Response;

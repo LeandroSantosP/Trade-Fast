@@ -1,4 +1,4 @@
-package com.leandrosps.http.filters;
+package com.leandrosps.infra.http.filters;
 
 import com.leandrosps.application.TokenHandler;
 
@@ -16,12 +16,12 @@ public class AuthFilter implements CustomFilter {
    @Override
    public void handle(Request request, Response response, Service service) {
 
-      var authHeader = request.headers("Authorization").trim();
+      var authHeader = request.headers("Authorization");
 
       if (authHeader == null || !authHeader.startsWith("Bearer ")) {
          service.halt(401, "Not Authorized");
       }
-      var token = authHeader.substring(7);
+      var token = authHeader.substring(7).trim();;
       var result = tokenHandler.tokenValidation(token);
       
       if (!result.isValid()) {
