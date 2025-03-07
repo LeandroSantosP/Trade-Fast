@@ -1,4 +1,4 @@
-package com.leandrosps.application;
+package com.leandrosps.application.auth;
 
 import java.nio.file.Files;
 import java.security.KeyFactory;

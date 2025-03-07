@@ -1,4 +1,4 @@
-package com.leandrosps.infra;
+package com.leandrosps.infra.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

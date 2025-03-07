@@ -1,4 +1,4 @@
-package com.leandrosps.application;
+package com.leandrosps.domain;
 
 public enum Roles {
    USER("user"), ADMIN("admin");

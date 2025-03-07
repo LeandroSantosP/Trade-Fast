@@ -1,5 +1,6 @@
-package com.leandrosps.application;
+package com.leandrosps.application.auth;
 
+import com.leandrosps.domain.User;
 import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
 import com.leandrosps.infra.database.UserDAO;

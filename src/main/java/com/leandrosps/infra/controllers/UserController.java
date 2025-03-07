@@ -1,7 +1,7 @@
 package com.leandrosps.infra.controllers;
 
-import com.leandrosps.application.TokenHandler;
-import com.leandrosps.application.UserService;
+import com.leandrosps.application.auth.TokenHandler;
+import com.leandrosps.application.auth.UserService;
 import com.leandrosps.infra.database.UserDAO;
 import com.leandrosps.infra.http.HandlerOutput;
 import com.leandrosps.infra.http.HttpClient;
@@ -16,7 +16,7 @@ public class UserController {
 			TokenHandler tokenHandler) {
 
 		http.on(HttpMethods.DELETE, "/priv/auth/delete", (params, data, user_id) -> {
-			userService.deletUser(user_id);
+			userService.deleteUser(user_id);
 			return null;
 		});
 

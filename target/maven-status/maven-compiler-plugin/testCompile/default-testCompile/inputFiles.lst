@@ -1,2 +1,1 @@
-/home/leandro/www/java/trade-fast/src/test/java/com/leandrosps/application/UserRegisterTest.java
-/home/leandro/www/java/trade-fast/src/test/java/com/leandrosps/infra/AuthControllerTest.java
+/home/leandro/www/java/trade-fast/src/test/java/com/leandrosps/infra/controllers/AuthControllerTest.java

@@ -1,6 +1,6 @@
-package com.leandrosps.application;
+package com.leandrosps.application.auth;
 
-import com.leandrosps.application.TokenHandler.TokenValidationResult;
+import com.leandrosps.application.auth.TokenHandler.TokenValidationResult;
 import com.leandrosps.dtos.UserLoginOuput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
 import com.leandrosps.infra.database.UserDAO;

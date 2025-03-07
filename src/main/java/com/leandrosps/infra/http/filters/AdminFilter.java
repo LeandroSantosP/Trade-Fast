@@ -1,6 +1,6 @@
 package com.leandrosps.infra.http.filters;
 
-import com.leandrosps.application.TokenHandler;
+import com.leandrosps.application.auth.TokenHandler;
 
 import spark.Request;
 import spark.Response;

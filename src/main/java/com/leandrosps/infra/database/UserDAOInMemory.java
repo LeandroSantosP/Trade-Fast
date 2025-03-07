@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.leandrosps.application.Roles;
-import com.leandrosps.application.User;
+import com.leandrosps.domain.Roles;
+import com.leandrosps.domain.User;
 import com.leandrosps.exceptions.NotFoundException;
 import lombok.Getter;
 

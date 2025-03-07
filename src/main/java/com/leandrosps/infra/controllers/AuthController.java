@@ -1,9 +1,9 @@
 package com.leandrosps.infra.controllers;
 
 import com.google.gson.Gson;
-import com.leandrosps.application.TokenHandler;
-import com.leandrosps.application.UserLogin;
-import com.leandrosps.application.UserRegister;
+import com.leandrosps.application.auth.TokenHandler;
+import com.leandrosps.application.auth.UserLogin;
+import com.leandrosps.application.auth.UserRegister;
 import com.leandrosps.dtos.UserLoginInput;
 import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.infra.controllers.UserController.Test;

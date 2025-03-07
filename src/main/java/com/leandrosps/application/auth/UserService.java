@@ -1,4 +1,4 @@
-package com.leandrosps.application;
+package com.leandrosps.application.auth;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class UserService {
         return new GetUserOutput(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
     }
 
-    public void deletUser(String id) {
+    public void deleteUser(String id) {
         var user = this.userDAO.getUser(id);
         userDAO.delete(user.getId().toString());
     }
