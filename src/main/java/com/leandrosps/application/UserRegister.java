@@ -4,6 +4,7 @@ import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
 import com.leandrosps.infra.database.UserDAO;
 
+
 public class UserRegister {
 
     private UserDAO userDAO;
@@ -13,6 +14,7 @@ public class UserRegister {
     }
 
     public String excute(UserRegisterInput input) {
+
         var userOp = this.userDAO.getUserByEmail(input.email());
 
         if (userOp.isPresent()) {
@@ -22,5 +24,4 @@ public class UserRegister {
         this.userDAO.persiste(user);
         return user.getId().toString();
     }
-
 }

@@ -78,7 +78,10 @@ public class SparkJavaAdapter implements HttpClient {
         var output = callback.handle(req.params(), req.body(), req.attribute("user_id"));
         res.type("application/json");
         res.status(output.status());
-        return new Gson().toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output.data())));
+
+        var response = new Gson()
+                .toJson(new StandardResponse(StatusReponse.SUCCESS, new Gson().toJsonTree(output.data())));
+        return response;
     }
 
     @Override

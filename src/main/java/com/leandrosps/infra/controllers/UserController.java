@@ -1,7 +1,6 @@
 package com.leandrosps.infra.controllers;
 
 import com.leandrosps.application.TokenHandler;
-import com.leandrosps.application.UserLogin;
 import com.leandrosps.application.UserService;
 import com.leandrosps.infra.database.UserDAO;
 import com.leandrosps.infra.http.HandlerOutput;
@@ -13,7 +12,7 @@ public class UserController {
 	public record Test(String token) {
 	}
 
-	public UserController(HttpClient http, UserService userService, UserLogin userLogin, UserDAO userDAO,
+	public UserController(HttpClient http, UserService userService, UserDAO userDAO,
 			TokenHandler tokenHandler) {
 
 		http.on(HttpMethods.DELETE, "/priv/auth/delete", (params, data, user_id) -> {

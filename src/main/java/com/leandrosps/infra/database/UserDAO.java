@@ -11,4 +11,5 @@ public interface UserDAO {
     void persiste(User user);
     void delete(String id);
     List<User> list();
+    void clear();
 }

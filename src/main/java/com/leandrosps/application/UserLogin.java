@@ -1,7 +1,5 @@
 package com.leandrosps.application;
 
-import java.util.List;
-
 import com.leandrosps.application.TokenHandler.TokenValidationResult;
 import com.leandrosps.dtos.UserLoginOuput;
 import com.leandrosps.exceptions.UserUnauthorizedException;
@@ -30,7 +28,7 @@ public class UserLogin {
             throw new UserUnauthorizedException("Passoword or email is invalid!!");
         }
 
-        var generateTokenOutput = this.tokenHandler.generateToken(user.getId().toString(), user.getEmail(), List.of("user"));
+        var generateTokenOutput = this.tokenHandler.generateToken(user.getId().toString(), user.getEmail(), user.getRolesAsListString());
 
         return new UserLoginOuput(generateTokenOutput.token(), generateTokenOutput.expiredAt());
     }

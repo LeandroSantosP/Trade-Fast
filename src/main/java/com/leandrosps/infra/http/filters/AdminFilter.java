@@ -20,8 +20,6 @@ public class AdminFilter implements CustomFilter {
       var token = authHeader.substring(7).trim();
       var result = tokenHandler.tokenValidation(token);
 
-      System.out.println("USER_ROLES" + result.roles());
-
       if (!result.roles().contains("admin")) {
          throw new RuntimeException("Not authorized!");
       }

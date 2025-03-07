@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.leandrosps.application.TokenHandler;
 import com.leandrosps.application.UserLogin;
 import com.leandrosps.application.UserRegister;
-import com.leandrosps.application.UserService;
 import com.leandrosps.dtos.UserLoginInput;
 import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.infra.controllers.UserController.Test;
@@ -14,7 +13,7 @@ import com.leandrosps.infra.http.HttpClient;
 import com.leandrosps.infra.http.HttpMethods;
 
 public class AuthController {
-   public AuthController(HttpClient http, UserService userService, UserLogin userLogin, UserDAO userDAO,
+   public AuthController(HttpClient http, UserLogin userLogin, UserDAO userDAO,
          TokenHandler tokenHandler) {
 
       http.on(HttpMethods.POST, "/auth/register", (params, data, user_id) -> {
