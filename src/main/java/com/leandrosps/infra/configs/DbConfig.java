@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 
 import com.leandrosps.infra.utils.DbCredentails;
 import com.zaxxer.hikari.HikariConfig;
@@ -38,19 +35,15 @@ public class DbConfig {
       return conn;
    }
 
-   public DSLContext createDSLContext() {
-      return DSL.using(getDataSource(), SQLDialect.MYSQL);
-   }
-
    public Flyway flyway() {
       Flyway flyway = Flyway.configure()
             .dataSource(this.getDataSource())
             .locations("classpath:db/migration")
             .load();
       flyway.migrate();
-   for (MigrationInfo all : flyway.info().all()) {
+      for (MigrationInfo all : flyway.info().all()) {
          System.out.println(all);
-   };
+      }
       return flyway;
    }
 

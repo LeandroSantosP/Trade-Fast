@@ -15,9 +15,7 @@ public class UserRegister {
     }
 
     public String excute(UserRegisterInput input) {
-
         var userOp = this.userDAO.getUserByEmail(input.email());
-
         if (userOp.isPresent()) {
             throw new UserUnauthorizedException("Invalid Credentials!");
         }

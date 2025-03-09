@@ -1,24 +1,20 @@
 package com.leandrosps.infra.controllers;
 
 import com.google.gson.Gson;
-import com.leandrosps.application.auth.TokenHandler;
-import com.leandrosps.application.auth.UserLogin;
 import com.leandrosps.application.auth.UserRegister;
+import com.leandrosps.application.auth.UserLogin;
 import com.leandrosps.dtos.UserLoginInput;
 import com.leandrosps.dtos.UserRegisterInput;
 import com.leandrosps.infra.controllers.UserController.Test;
-import com.leandrosps.infra.database.UserDAO;
 import com.leandrosps.infra.http.HandlerOutput;
 import com.leandrosps.infra.http.HttpClient;
 import com.leandrosps.infra.http.HttpMethods;
 
 public class AuthController {
-   public AuthController(HttpClient http, UserLogin userLogin, UserDAO userDAO,
-         TokenHandler tokenHandler) {
+   public AuthController(HttpClient http, UserLogin userLogin, UserRegister userRegister) {
 
       http.on(HttpMethods.POST, "/auth/register", (params, data, user_id) -> {
          var input = new Gson().fromJson(data, UserRegisterInput.class);
-         UserRegister userRegister = new UserRegister(userDAO);
          return new HandlerOutput(userRegister.excute(input), 201);
       });
 
@@ -34,5 +30,4 @@ public class AuthController {
          return new HandlerOutput(output.message(), 201);
       });
    }
-
 }

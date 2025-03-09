@@ -9,10 +9,11 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
+import com.leandrosps.Main;
 import com.leandrosps.dtos.StandardResponse;
 import com.leandrosps.dtos.UserLoginInput;
 import com.leandrosps.dtos.UserRegisterInput;
-import com.leandrosps.infra.database.UserDAOInMemory;
+import com.leandrosps.infra.database.UserDAO;
 
 import okhttp3.*;
 
@@ -26,11 +27,11 @@ public class AuthControllerTest {
     public record LoginRsponse(String status, DataLoginResponse data) {
     }
 
-    UserDAOInMemory instance = UserDAOInMemory.getInstance();
+    private UserDAO datbase = Main.db();
 
     @BeforeEach
     void cleardb() {
-        instance.clear();
+        datbase.clear();
     }
 
     public record InnerAuthControllerTest(String status, String data) {
@@ -38,8 +39,6 @@ public class AuthControllerTest {
 
     @Test
     void shouldAuthenticatAnNewUser() throws IOException {
-        System.out.println("before"+instance.getStorage().size());
-
         /* Register */
 
         var client = new OkHttpClient();
@@ -81,7 +80,6 @@ public class AuthControllerTest {
         assertNotNull(outputLogin.data().token());
         assertNotNull(outputLogin.data().expiredAt());
         assertEquals("SUCCESS", outputLogin.status());
-        System.out.println("after"+instance.getStorage().size());
     }
 
 }

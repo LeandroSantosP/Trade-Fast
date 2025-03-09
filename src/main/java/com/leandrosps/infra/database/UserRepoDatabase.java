@@ -6,6 +6,7 @@ import static org.jooq.impl.DSL.using;
 
 import java.sql.Connection;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,42 +18,60 @@ import org.jooq.Table;
 import com.leandrosps.domain.Roles;
 import com.leandrosps.domain.User;
 import com.leandrosps.exceptions.NotFoundException;
+import com.leandrosps.infra.configs.ConnectionCustom;
 
 public class UserRepoDatabase implements UserDAO {
 
    private DSLContext dslContext;
+   private ConnectionCustom connectionCustom;
 
-   public UserRepoDatabase(Connection connection) {
+   private UserRepoDatabase(Connection connection, ConnectionCustom connectionCustom) {
       dslContext = using(connection, SQLDialect.MYSQL);
+      this.connectionCustom = connectionCustom;
    }
 
-   private Table<Record> usersTable = table("users");
+   private Table<Record> USER_T = table("users");
+
+
+   private static UserRepoDatabase instance = null;
+
+   public static UserRepoDatabase getInstance(Connection connection, ConnectionCustom connectionCustom) {
+       if (instance != null) {
+           return instance;
+       }
+       return new UserRepoDatabase(connection, connectionCustom);
+   }
+
 
    /* Mutaions */
    @Override
    public void persiste(User user) {
+      var roleByCustomRepo = this.connectionCustom.query("SELECT * FROM roles WHERE roles.value = ?",
+            user.getMajorRole());
+
+      System.out.println("ROLES: \n" + roleByCustomRepo);
 
       var roleResults = this.dslContext
             .select(field("id"))
             .from(table("roles"))
-            .where(field("value").eq(user.getMajorRole()))
+            .where(field("roles.value").eq(user.getMajorRole()))
             .fetch();
 
-      if (roleResults == null || roleResults.isEmpty() ) {
+      if (roleResults == null || roleResults.isEmpty()) {
          throw new NotFoundException("Role does not exists!");
       }
 
       var roleId = roleResults.get(0).get("id", String.class);
 
-      this.dslContext.insertInto(usersTable,
-            field("id"),
-            field("frist_name"),
-            field("last_name"),
-            field("email"),
-            field("password"),
-            field("salt"),
-            field("fk_role_id"),
-            field("created_at"))
+      this.dslContext.insertInto(USER_T,
+            field("users.id"),
+            field("users.first_name"),
+            field("users.last_name"),
+            field("users.email"),
+            field("users.password"),
+            field("users.salt"),
+            field("users.fk_role_id"),
+            field("users.created_at"))
             .values(
                   user.getId(),
                   user.getFirstName(),
@@ -73,8 +92,7 @@ public class UserRepoDatabase implements UserDAO {
 
    @Override
    public void clear() {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'clear'");
+      this.dslContext.truncate(table("users")).execute();
    }
 
    /* Query */
@@ -86,14 +104,13 @@ public class UserRepoDatabase implements UserDAO {
    }
 
    @Override
-   public Optional<User> getUserByEmail(String id) {
+   public Optional<User> getUserByEmail(String user_email) {
       /*
        * ✅ Returns a single record if exactly one row matches.
        * ✅ Returns null if no record is found.
        * ❌ Throws an exception if more than one row is found.
        */
-      var userData = this.dslContext.select().from(table("users")).where(field("email").eq(id)).fetchOne();
-
+      var userData = this.dslContext.select().from(table("users")).where(field("email").eq(user_email)).fetchOne();
       if (userData == null) {
          return Optional.empty();
       }
@@ -114,7 +131,7 @@ public class UserRepoDatabase implements UserDAO {
 
       var roleData = roleResults.get("value", String.class);
 
-      List<Roles> roles = List.of();
+      List<Roles> roles = new ArrayList<>();
 
       if (roleData.equals("admin")) {
          roles.add(Roles.ADMIN);

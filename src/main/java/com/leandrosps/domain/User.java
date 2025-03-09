@@ -29,7 +29,7 @@ public class User {
     }
 
     public boolean isPasswordValid(String rawPassword) {
-        return BCrypt.verifyer().verify(rawPassword.toCharArray(), this.getPassword().toCharArray()).verified;
+        return BCrypt.verifyer().verify(rawPassword.toCharArray(), this.getPassword()).verified;
     }
 
     public List<String> getRolesAsListString() {
@@ -40,8 +40,6 @@ public class User {
 
         String result = null;
 
-        System.out.println("roles: "+ this.getRoles());
-
         for (Roles role : this.roles) {
             if (role.name().equalsIgnoreCase("user")) {
                 result = role.name();
@@ -51,7 +49,7 @@ public class User {
             }
         }
 
-        if (result== null) {
+        if (result == null) {
             throw new RuntimeException("Role can not be null!");
         }
 

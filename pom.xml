@@ -136,8 +136,8 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>11.3.4</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3307/fast-db</url>
-                    <user>fast</user>
+                    <url>jdbc:mysql://localhost:3307/fastDb</url>
+                    <user>root</user>
                     <password>1234</password>
                     <baselineOnMigrate>true</baselineOnMigrate>
                     <cleanDisabled>false</cleanDisabled>

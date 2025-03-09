@@ -38,6 +38,7 @@ public class SparkJavaAdapter implements HttpClient {
                 this.http.get(path, (req, res) -> handleRequest(callback, req, res));
                 break;
             case POST:
+
                 this.http.post(path, (req, res) -> handleRequest(callback, req, res));
                 break;
             case PUT:
@@ -64,11 +65,13 @@ public class SparkJavaAdapter implements HttpClient {
         });
 
         http.exception(RuntimeException.class, (exception, request, response) -> {
+            exception.printStackTrace();
             response.status(400);
             response.body(exception.getMessage());
         });
 
         http.exception(Exception.class, (exception, request, response) -> {
+            exception.printStackTrace();
             response.status(500);
             response.body("Internal Server Error: " + exception.getMessage());
         });
@@ -91,3 +94,4 @@ public class SparkJavaAdapter implements HttpClient {
         });
     }
 }
+

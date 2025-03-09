@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS users (
-   id VARCHAR(150) PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS fastDb.users (
+   id CHAR(36) PRIMARY KEY,
    first_name VARCHAR(100) NOT NULL,
    last_name VARCHAR(100) NOT NULL,
    email VARCHAR(100) UNIQUE NOT NULL,
@@ -8,19 +8,19 @@ CREATE TABLE IF NOT EXISTS users (
    created_at DATETIME
 );
 
-CREATE TABLE IF NOT EXISTS roles (
-   id VARCHAR(150) PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS fastDb.roles (
+   id CHAR(36) PRIMARY KEY,
    value VARCHAR(100) UNIQUE NOT NULL
 );
 
 ALTER TABLE
-   users
+   fastDb.users
 ADD
-   COLUMN fk_role_id VARCHAR(150) NOT NULL
+   COLUMN fk_role_id CHAR(36) NOT NULL
 AFTER
    password;
 
 ALTER TABLE
-   users
+   fastDb.users
 ADD
-   FOREIGN KEY (fk_role_id) REFERENCES roles(id);
+   FOREIGN KEY (fk_role_id) REFERENCES fastDb.roles(id);
