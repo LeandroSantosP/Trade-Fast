@@ -13,7 +13,22 @@ public class TradeOrderRepo {
       this.storage.add(order);
    }
 
+   public List<TradeOrder> getOrdersByAcAndType(String assetCode, String type) {
+      return this.storage.stream().filter(oT -> oT.getAssetCode().equals(assetCode) && oT.getType().equals(type))
+            .toList();
+   }
+
    public List<TradeOrder> getOrdersByAccetCode(String assetCode) {
       return this.storage.stream().filter(oT -> oT.getAssetCode().equals(assetCode)).toList();
+   }
+
+   public void update(TradeOrder orderUpdated) {
+      for (int i = 0; i < this.storage.size(); i++) {
+         if (this.storage.get(i).getId().equals(orderUpdated.getId())) {
+            this.storage.set(i, orderUpdated);
+            return;
+         }
+      }
+      throw new RuntimeException("Order not found!");
    }
 }

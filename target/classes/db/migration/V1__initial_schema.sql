@@ -23,4 +23,4 @@ AFTER
 ALTER TABLE
    fastDb.users
 ADD
-   FOREIGN KEY (fk_role_id) REFERENCES fastDb.roles(id);
+   FOREIGN KEY (fk_role_id) REFERENCES fastDb.roles(id) ON DELETE CASCADE;

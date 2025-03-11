@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS fastDb.order (
    quantity INTEGER,
    price INTEGER NOT NULL,
    fk_owner_id CHAR(36) NOT NULL,
-   FOREIGN KEY (fk_owner_id) REFERENCES fastDb.users(id),
+   FOREIGN KEY (fk_owner_id) REFERENCES fastDb.users(id) ON DELETE CASCADE,
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

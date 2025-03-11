@@ -92,7 +92,7 @@ public class UserRepoDatabase implements UserDAO {
 
    @Override
    public void clear() {
-      this.dslContext.truncate(table("users")).execute();
+      this.dslContext.delete(table("fastDb.users")).execute();
    }
 
    /* Query */

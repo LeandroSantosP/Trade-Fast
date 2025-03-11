@@ -30,6 +30,11 @@ public class Main {
         return mysql;
     }
 
+    public static UserDAO dbInMemory() {
+        /* For Testing */
+        return UserDAOInMemory.getInstance();
+    }
+
     /* Use Cases */
     private static TokenHandler tokenHandler = new TokenHandler();
     private static UserService userService = new UserService(db());
