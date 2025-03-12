@@ -12,6 +12,7 @@ import com.leandrosps.infra.database.TradeOrderRepo;
 
 public class CreateOrderTradeTest {
    @Test
+   @Tag("here")
    void shouleCreateASellingOrderAccect() {
 
       var tradeOrderRepo = new TradeOrderRepo();
@@ -256,7 +257,6 @@ public class CreateOrderTradeTest {
    }
 
    @Test
-   @Tag("here")
    void shouldCreataMultipleSellingOrderForOneBuyOrder() {
       var tradeOrderRepo = new TradeOrderRepo();
 
@@ -310,7 +310,6 @@ public class CreateOrderTradeTest {
       assertEquals("open", orderC.status());
 
       var orderD = output.get(3);
-      System.out.println("HERE: "+orderD.toString());
       assertInstanceOf(UUID.class, orderD.id());
       assertEquals("USDC", orderD.assetCode());
       assertEquals("buying", orderD.type());

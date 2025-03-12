@@ -20,11 +20,8 @@ public class CreateOrderTrade {
       }
 
       if (input.type().equals("buying")) {
-
          var sellingOrders = this.tradeOrderRepo.getOrdersByAcAndType(input.assert_code(), "selling");
-         var totalToBuy = tradeOderToExec.getTotalAmount();
          var profitToBuy = 0.0;
-         var remainToBuy = totalToBuy;
          var remainAccetsToBuy = tradeOderToExec.getQuantity();
 
          for (TradeOrder sellOrder : sellingOrders) {
@@ -36,39 +33,39 @@ public class CreateOrderTrade {
              * amount remains to buy is 500 (1000 - 500)
              */
 
-            var sellNewQuantity = sellOrder.getQuantity() - tradeOderToExec.getQuantity();
-
+            var sellNewQuantity = sellOrder.getQuantity() - remainAccetsToBuy;
+            
             if (tradeOderToExec.getPrice().compareTo(sellOrder.getPrice()) >= 0) {
-               /* Quantity */
-
-               var remainAccetsToSell = sellNewQuantity <= 0 ? 0 : sellNewQuantity;
                
-               if (remainAccetsToBuy - sellOrder.getQuantity() <= 0) {
+               remainAccetsToBuy -= sellOrder.getQuantity();
+   
+               if (remainAccetsToBuy < 0) {
                   remainAccetsToBuy = 0;
-               } else {
-                  remainAccetsToBuy -= sellOrder.getQuantity();
                }
 
-               /* Price */
-               var sellTotal = sellOrder.getTotalAmount();
-               remainToBuy -= sellTotal;
-               profitToBuy = sellTotal - tradeOderToExec.getTotalAmount() + tradeOderToExec.getTotalAmount();
+               var remainAccetsToSell = sellNewQuantity <= 0 ? 0 : sellNewQuantity;
+
                if (remainAccetsToSell > 0) {
-                  sellTotal = (remainToBuy + sellTotal);
-                  sellOrder.updateQuantityAndStatus(remainAccetsToSell, "open", sellTotal);
+                  var totalWithRemain = sellOrder.getTotalByQuantity((double) remainAccetsToSell);
+                  profitToBuy += totalWithRemain;
+                  sellOrder.updateQuantityAndStatus(remainAccetsToSell, "open", totalWithRemain);
                   this.tradeOrderRepo.update(sellOrder);
                   continue;
                }
+
+               var sellTotal = sellOrder.getTotalAmount();
+               profitToBuy += sellTotal;
+
                sellOrder.updateQuantityAndStatus(remainAccetsToSell, "close", sellTotal);
                this.tradeOrderRepo.update(sellOrder);
             }
          }
 
-         if (remainToBuy <= 0) {
+         if (remainAccetsToBuy <= 0) {
             tradeOderToExec.updateQuantityAndStatus(remainAccetsToBuy, "close", profitToBuy);
          }
 
-         if (remainToBuy > 0) {
+         if (remainAccetsToBuy > 0) {
             tradeOderToExec.updateQuantityAndStatus(remainAccetsToBuy, "open", profitToBuy);
          }
       }

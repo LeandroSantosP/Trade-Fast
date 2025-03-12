@@ -39,4 +39,8 @@ public class TradeOrder {
    public Double calculateProfit(Double total) {
       return total - this.getTotalAmount() + this.getTotalAmount();
    }
+
+   public Double getTotalByQuantity(Double quantity) {
+      return quantity * this.price;
+   }
 }
