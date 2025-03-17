@@ -27,7 +27,7 @@ public class AuthControllerTest {
     public record LoginRsponse(String status, DataLoginResponse data) {
     }
 
-    private UserDAO datbase = Main.db();
+    private UserDAO datbase = Main.dbUser();
 
     @BeforeEach
     void cleardb() {
@@ -75,7 +75,7 @@ public class AuthControllerTest {
         Response responseLogin = assertDoesNotThrow(() -> client.newCall(requestLogin).execute());
 
         var outputLogin = new Gson().fromJson(responseLogin.body().string(), LoginRsponse.class);
-
+System.out.println(outputLogin);
         assertEquals(201, responseLogin.code());
         assertNotNull(outputLogin.data().token());
         assertNotNull(outputLogin.data().expiredAt());

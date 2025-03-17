@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.leandrosps.infra.controllers.AuthControllerTest" time="1.107" tests="1" errors="1" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.leandrosps.domain.UserTest" time="0.005" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,10 +13,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/bellsoft-java21-amd64/lib"/>
-    <property name="sun.java.command" value="/home/leandro/www/java/trade-fast/target/surefire/surefirebooter-20250317185338114_3.jar /home/leandro/www/java/trade-fast/target/surefire 2025-03-17T18-53-38_059-jvmRun1 surefire-20250317185338114_1tmp surefire_0-20250317185338114_2tmp"/>
+    <property name="sun.java.command" value="/home/leandro/www/java/trade-fast/target/surefire/surefirebooter-20250317183900142_3.jar /home/leandro/www/java/trade-fast/target/surefire 2025-03-17T18-39-00_085-jvmRun1 surefire-20250317183900142_1tmp surefire_0-20250317183900142_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/leandro/www/java/trade-fast/target/test-classes:/home/leandro/www/java/trade-fast/target/classes:/home/leandro/.m2/repository/com/sparkjava/spark-core/2.9.4/spark-core-2.9.4.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-server/9.4.48.v20220622/jetty-server-9.4.48.v20220622.jar:/home/leandro/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-http/9.4.48.v20220622/jetty-http-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-util/9.4.48.v20220622/jetty-util-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-io/9.4.48.v20220622/jetty-io-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-webapp/9.4.48.v20220622/jetty-webapp-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-xml/9.4.48.v20220622/jetty-xml-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.48.v20220622/jetty-servlet-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-security/9.4.48.v20220622/jetty-security-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-util-ajax/9.4.48.v20220622/jetty-util-ajax-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/websocket/websocket-server/9.4.48.v20220622/websocket-server-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/websocket/websocket-common/9.4.48.v20220622/websocket-common-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/websocket/websocket-client/9.4.48.v20220622/websocket-client-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/jetty-client/9.4.48.v20220622/jetty-client-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/websocket/websocket-servlet/9.4.48.v20220622/websocket-servlet-9.4.48.v20220622.jar:/home/leandro/.m2/repository/org/eclipse/jetty/websocket/websocket-api/9.4.48.v20220622/websocket-api-9.4.48.v20220622.jar:/home/leandro/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/home/leandro/.m2/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar:/home/leandro/.m2/repository/at/favre/lib/bcrypt/0.10.2/bcrypt-0.10.2.jar:/home/leandro/.m2/repository/at/favre/lib/bytes/1.5.0/bytes-1.5.0.jar:/home/leandro/.m2/repository/org/slf4j/slf4j-simple/2.0.9/slf4j-simple-2.0.9.jar:/home/leandro/.m2/repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar:/home/leandro/.m2/repository/com/squareup/okio/okio/3.6.0/okio-3.6.0.jar:/home/leandro/.m2/repository/com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar:/home/leandro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.9.10/kotlin-stdlib-common-1.9.10.jar:/home/leandro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.21/kotlin-stdlib-jdk8-1.8.21.jar:/home/leandro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.21/kotlin-stdlib-1.8.21.jar:/home/leandro/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:/home/leandro/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.21/kotlin-stdlib-jdk7-1.8.21.jar:/home/leandro/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.1/junit-jupiter-api-5.10.1.jar:/home/leandro/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/leandro/.m2/repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar:/home/leandro/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/leandro/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.1/junit-jupiter-engine-5.10.1.jar:/home/leandro/.m2/repository/org/junit/platform/junit-platform-engine/1.10.1/junit-platform-engine-1.10.1.jar:/home/leandro/.m2/repository/io/jsonwebtoken/jjwt-api/0.12.6/jjwt-api-0.12.6.jar:/home/leandro/.m2/repository/io/jsonwebtoken/jjwt-impl/0.12.6/jjwt-impl-0.12.6.jar:/home/leandro/.m2/repository/io/jsonwebtoken/jjwt-gson/0.12.6/jjwt-gson-0.12.6.jar:/home/leandro/.m2/repository/io/github/cdimascio/dotenv-java/3.0.0/dotenv-java-3.0.0.jar:/home/leandro/.m2/repository/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar:/home/leandro/.m2/repository/com/mysql/mysql-connector-j/9.2.0/mysql-connector-j-9.2.0.jar:/home/leandro/.m2/repository/com/google/protobuf/protobuf-java/4.29.0/protobuf-java-4.29.0.jar:/home/leandro/.m2/repository/com/zaxxer/HikariCP/6.2.1/HikariCP-6.2.1.jar:/home/leandro/.m2/repository/org/jooq/jooq/3.20.1/jooq-3.20.1.jar:/home/leandro/.m2/repository/io/r2dbc/r2dbc-spi/1.0.0.RELEASE/r2dbc-spi-1.0.0.RELEASE.jar:/home/leandro/.m2/repository/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar:/home/leandro/.m2/repository/org/flywaydb/flyway-core/11.3.4/flyway-core-11.3.4.jar:/home/leandro/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.15.2/jackson-dataformat-toml-2.15.2.jar:/home/leandro/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar:/home/leandro/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar:/home/leandro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.2/jackson-datatype-jsr310-2.15.2.jar:/home/leandro/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar:/home/leandro/.m2/repository/org/antlr/antlr4-runtime/4.13.2/antlr4-runtime-4.13.2.jar:/home/leandro/.m2/repository/org/flywaydb/flyway-mysql/11.3.4/flyway-mysql-11.3.4.jar:"/>
-    <property name="test" value="AuthControllerTest"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/leandro"/>
     <property name="user.language" value="en"/>
@@ -27,9 +26,9 @@
     <property name="basedir" value="/home/leandro/www/java/trade-fast"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/leandro/www/java/trade-fast/target/surefire/surefirebooter-20250317185338114_3.jar"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/home/leandro/www/java/trade-fast/target/surefire/surefirebooter-20250317183900142_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.6+10-LTS"/>
     <property name="user.name" value="leandro"/>
@@ -56,63 +55,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="shouldAuthenticatAnNewUser" classname="com.leandrosps.infra.controllers.AuthControllerTest" time="0.491">
-    <error message="java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path $" type="com.google.gson.JsonSyntaxException"><![CDATA[com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path $
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:397)
-	at com.google.gson.Gson.fromJson(Gson.java:1227)
-	at com.google.gson.Gson.fromJson(Gson.java:1137)
-	at com.google.gson.Gson.fromJson(Gson.java:1047)
-	at com.google.gson.Gson.fromJson(Gson.java:982)
-	at com.leandrosps.infra.controllers.AuthControllerTest.shouldAuthenticatAnNewUser(AuthControllerTest.java:77)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path $
-	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:393)
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:386)
-	... 8 more
-]]></error>
-    <system-out><![CDATA[Connection with success!
-Connection with success!
-Connection with success!
-]]></system-out>
-    <system-err><![CDATA[[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-[main] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@39ad977d
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
-[main] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7674a051
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
-[main] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7b02e036
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
-[main] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3b4ef7
-[main] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
-[main] INFO org.jooq.Constants - 
-                                      
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@
-@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@
-@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@
-@@@@@@@@@@        @@        @@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@        @@        @@@@@@@@@@
-@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
-@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
-@@@@@@@@@@        @@  @  @  @@@@@@@@@@
-@@@@@@@@@@        @@        @@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.20.1 (Build date: 2025-02-21T13:05:38Z)
-                                      
-[main] INFO org.jooq.Constants - 
-
-jOOQ tip of the day: jOOQ Queries extend Flow.Publisher, and can thus be used in reactive APIs. Blocking on JDBC by default, but if you configure an R2DBC ConnectionFactory, it's automatically non-blocking!
-
-[main] INFO org.jooq.impl.DefaultExecuteContext.logVersionSupport - Version                  : Database version is supported by dialect MYSQL: 8.1.0
-]]></system-err>
-  </testcase>
+  <testcase name="shouldReturnAdminRoleWhenOnlyAdminRole" classname="com.leandrosps.domain.UserTest" time="0.001"/>
+  <testcase name="shouldReturnAdminRoleWhenBothRoles" classname="com.leandrosps.domain.UserTest" time="0.001"/>
+  <testcase name="shouldThrowExceptionWhenNoValidRoles" classname="com.leandrosps.domain.UserTest" time="0.002"/>
+  <testcase name="shouldReturnUserRoleWhenOnlyUserRole" classname="com.leandrosps.domain.UserTest" time="0.001"/>
 </testsuite>

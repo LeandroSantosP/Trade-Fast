@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import com.leandrosps.dtos.CreateOrderTradeInput;
 import com.leandrosps.infra.database.TradeOrderRepo;
 
 public class CreateOrderTradeTest {
    @Test
-   @Tag("here")
    void shouleCreateASellingOrderAccect() {
 
       var tradeOrderRepo = new TradeOrderRepo();

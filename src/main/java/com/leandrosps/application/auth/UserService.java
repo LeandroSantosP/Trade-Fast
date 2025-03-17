@@ -1,20 +1,22 @@
 package com.leandrosps.application.auth;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.leandrosps.dtos.GetUserOutput;
+import com.leandrosps.infra.database.Repositories;
 import com.leandrosps.infra.database.UserDAO;
 
 public class UserService {
     
     private UserDAO userDAO;
     
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserService(Repositories uow) {
+        this.userDAO = (UserDAO) uow.userRepository(); 
     }
 
     public GetUserOutput getUser(String id_from, String id_to) {
-        var user = this.userDAO.getUser(id_from);
+        var user = this.userDAO.getById(UUID.fromString(id_from));
 
         if (!user.getId().toString().equals(id_to)) {
             throw new RuntimeException("User has no authorized to this operation!");
@@ -24,8 +26,8 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
-        var user = this.userDAO.getUser(id);
-        userDAO.delete(user.getId().toString());
+        var user = this.userDAO.getById(UUID.fromString(id));
+        userDAO.delete(user.getId());
     }
 
     public List<GetUserOutput> list() {

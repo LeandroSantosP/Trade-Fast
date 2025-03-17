@@ -14,9 +14,9 @@ public class JooqAdapter implements ConnectionCustom {
    private DSLContext dslContext;
    private DataSource dataSource;
 
-   public JooqAdapter(DataSource connection) {
-      dslContext = using(connection, SQLDialect.MYSQL);
-      this.dataSource = connection;
+   public JooqAdapter(DataSource dataSource) {
+      dslContext = using(dataSource, SQLDialect.MYSQL);
+      this.dataSource = dataSource;
    }
 
    @Override

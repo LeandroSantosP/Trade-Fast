@@ -42,8 +42,8 @@ public class UserDAOInMemory implements UserDAO {
     }
 
     @Override
-    public void delete(String id) {
-        var user = this.getUser(id);
+    public void delete(UUID id) {
+        var user = this.getById(id);
         this.storage.remove(user);
     }
 
@@ -60,7 +60,12 @@ public class UserDAOInMemory implements UserDAO {
     }
 
     @Override
-    public User getUser(String id) {
+    public List<User> list() {
+        return this.storage;
+    }
+
+    @Override
+    public User getById(UUID id) {
         var userUp = this.storage.stream().filter(user -> user.getId().toString().equals(id))
                 .findFirst();
         if (!userUp.isPresent()) {
@@ -70,8 +75,8 @@ public class UserDAOInMemory implements UserDAO {
     }
 
     @Override
-    public List<User> list() {
-        return this.storage;
+    public void update(User entity) {
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
 }

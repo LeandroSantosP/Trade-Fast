@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -32,16 +33,14 @@ public class UserRepoDatabase implements UserDAO {
 
    private Table<Record> USER_T = table("users");
 
-
    private static UserRepoDatabase instance = null;
 
    public static UserRepoDatabase getInstance(Connection connection, ConnectionCustom connectionCustom) {
-       if (instance != null) {
-           return instance;
-       }
-       return new UserRepoDatabase(connection, connectionCustom);
+      if (instance != null) {
+         return instance;
+      }
+      return new UserRepoDatabase(connection, connectionCustom);
    }
-
 
    /* Mutaions */
    @Override
@@ -85,9 +84,7 @@ public class UserRepoDatabase implements UserDAO {
    }
 
    @Override
-   public void delete(String id) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'delete'");
+   public void delete(UUID id) {
    }
 
    @Override
@@ -96,12 +93,6 @@ public class UserRepoDatabase implements UserDAO {
    }
 
    /* Query */
-
-   @Override
-   public User getUser(String id) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getUser'");
-   }
 
    @Override
    public Optional<User> getUserByEmail(String user_email) {
@@ -147,8 +138,66 @@ public class UserRepoDatabase implements UserDAO {
 
    @Override
    public List<User> list() {
+      List<User> users = new ArrayList<>();
+      Result<Record> results = this.dslContext.select().from(USER_T).fetch();
+
+      for (Record record : results) {
+         var user_id = record.get("id", String.class);
+         var first_name = record.get("first_name", String.class);
+         var last_name = record.get("last_name", String.class);
+         var email = record.get("email", String.class);
+         var password = record.get("password", String.class);
+         var salt = record.get("salt", Integer.class);
+         var created_at = record.get("created_at", LocalDateTime.class);
+
+         var roleResults = this.dslContext
+               .select(field("value"))
+               .from(table("roles"))
+               .where(field("id").eq(record.get("fk_role_id", String.class)))
+               .fetchOne();
+
+         var roleData = roleResults.get("value", String.class);
+
+         List<Roles> roles = new ArrayList<>();
+
+         if (roleData.equals("admin")) {
+            roles.add(Roles.ADMIN);
+         }
+
+         if (roleData.equals("user")) {
+            roles.add(Roles.USER);
+         }
+
+         var user = new User(UUID.fromString(user_id), first_name, last_name, email, password, salt, roles, created_at);
+         users.add(user);
+      }
+
+      return users;
+   }
+
+   @Override
+   public User getById(UUID id) {
+      var userData = this.dslContext.select().from(table("users")).where(field("id").eq(id.toString())).fetchOne();
+      if (userData == null) {
+         throw new NotFoundException("User not found!");
+      }
+
+      var user_id = userData.get("id", String.class);
+      var first_name = userData.get("first_name", String.class);
+      var last_name = userData.get("last_name", String.class);
+      var email = userData.get("email", String.class);
+      var password = userData.get("password", String.class);
+      var salt = userData.get("salt", Integer.class);
+      var created_at = userData.get("created_at", LocalDateTime.class);
+
+      return new User(UUID.fromString(user_id), first_name, last_name, email, password, salt, new ArrayList<>(),
+            created_at);
+   }
+
+   @Override
+   public void update(User entity) {
       // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'list'");
+      throw new UnsupportedOperationException("Unimplemented method 'update'");
    }
 
 }
