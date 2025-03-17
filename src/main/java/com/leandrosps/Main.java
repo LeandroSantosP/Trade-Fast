@@ -59,7 +59,7 @@ public class Main {
 
         http.registerFilter("/priv/*", new AuthFilter(tokenHandler)); /* Only authenticated users can access */
         http.registerFilter("/priv/admin/*", new AdminFilter(tokenHandler)); /* Only admins can access */
-
+/*  */
         new AuthController(http, userLogin, userRegister);
         new UserController(http, userService);
     }
