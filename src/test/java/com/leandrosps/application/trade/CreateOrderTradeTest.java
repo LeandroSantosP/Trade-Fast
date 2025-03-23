@@ -1,21 +1,31 @@
 package com.leandrosps.application.trade;
 
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import com.leandrosps.dtos.CreateOrderTradeInput;
 import com.leandrosps.infra.database.TradeOrderRepo;
 
 public class CreateOrderTradeTest {
+
+   private TradeOrderRepo tradeOrderRepo;
+   private CreateOrderTrade createOrderTrade;
+
+   @BeforeEach
+   void setup() {
+      this.tradeOrderRepo = new TradeOrderRepo();
+      createOrderTrade = new CreateOrderTrade(tradeOrderRepo);
+   }
+
    @Test
    void shouleCreateASellingOrderAccect() {
-
-      var tradeOrderRepo = new TradeOrderRepo();
-
-      var createOrderTrade = new CreateOrderTrade(tradeOrderRepo);
 
       UUID onwerIdA = UUID.fromString("e903c0af-1762-42e4-9317-92229da13cda");
       var input = new CreateOrderTradeInput(onwerIdA, "USDC", "selling", 1000, 7.50);
@@ -315,6 +325,72 @@ public class CreateOrderTradeTest {
       assertEquals(5.80, orderD.price());
       // discount of 1390 ?
       assertEquals(7600, orderD.profit());
+      assertEquals("close", orderD.status());
+   }
+
+   @Test
+   @Tag("here")
+   @Disabled
+   void shouldBuyingSellingOrdersBasedOnTheCheapestPrices() {
+      var tradeOrderRepo = new TradeOrderRepo();
+
+      var createOrderTrade = new CreateOrderTrade(tradeOrderRepo);
+
+      UUID onwerIdA = UUID.fromString("e903c0af-1762-42e4-9317-92229da13cda");
+      var inputA = new CreateOrderTradeInput(onwerIdA, "USDC", "selling", 1000, 4.50);
+      createOrderTrade.execute(inputA);
+
+      UUID onwerIdB = UUID.fromString("1dbcbef3-fb43-42ea-9e95-097d173fb044");
+      var inputB = new CreateOrderTradeInput(onwerIdB, "USDC", "selling", 500, 5.62);
+      createOrderTrade.execute(inputB);
+
+      UUID onwerIdC = UUID.fromString("981050a6-7e43-4c3e-9b4a-58f4b28367e0");
+      var inputC = new CreateOrderTradeInput(onwerIdC, "USDC", "selling", 200, 3.00);
+      createOrderTrade.execute(inputC);
+
+      UUID onwerIdD = UUID.fromString("981050a6-7e43-4c3e-9b4a-58f4b28367e0");
+      var inputD = new CreateOrderTradeInput(onwerIdD, "USDC", "buying", 200, 5.80);
+      createOrderTrade.execute(inputD);
+
+      var getOrdersBook = new GetAssetsOrders(tradeOrderRepo);
+      var output = getOrdersBook.execute("USDC");
+
+      assertEquals(4, output.size());
+      var orderA = output.get(0);
+      assertInstanceOf(UUID.class, orderA.id());
+      assertEquals("USDC", orderA.assetCode());
+      assertEquals("selling", orderA.type());
+      assertEquals(1000, orderA.quantity());
+      assertEquals(4.50, orderA.price());
+      assertEquals(0, orderA.profit());
+      assertEquals("open", orderA.status());
+
+      var orderB = output.get(1);
+      assertInstanceOf(UUID.class, orderB.id());
+      assertEquals("USDC", orderB.assetCode());
+      assertEquals("selling", orderB.type());
+      assertEquals(500, orderB.quantity());
+      assertEquals(5.62, orderB.price());
+      assertEquals(0, orderB.profit());
+      assertEquals("open", orderB.status());
+
+      var orderC = output.get(2);
+      assertInstanceOf(UUID.class, orderC.id());
+      assertEquals("USDC", orderC.assetCode());
+      assertEquals("selling", orderC.type());
+      assertEquals(0, orderC.quantity()); /* 50 of leftover to buy */
+      assertEquals(3.00, orderC.price());
+      assertEquals(600, orderC.profit());
+      assertEquals("open", orderC.status());
+
+      var orderD = output.get(3);
+      assertInstanceOf(UUID.class, orderD.id());
+      assertEquals("USDC", orderD.assetCode());
+      assertEquals("buying", orderD.type());
+      assertEquals(0, orderD.quantity());
+      assertEquals(5.80, orderD.price());
+      // discount of 560 ?
+      assertEquals(600, orderD.profit());
       assertEquals("close", orderD.status());
    }
 }

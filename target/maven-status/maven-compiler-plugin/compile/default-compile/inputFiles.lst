@@ -21,6 +21,7 @@
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/dtos/GetUserOutput.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/utils/DbCredentails.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/http/SparkJavaAdapter.java
+/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/database/JooqUnityOfWorkDatabase.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/dtos/CreateOrderTradeInput.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/database/Repositories.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/exceptions/UserUnauthorizedException.java
@@ -34,7 +35,6 @@
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/http/filters/AdminFilter.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/database/Repository.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/application/auth/UserLogin.java
-/home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/database/UnityOfWorkDatabase.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/exceptions/NotFoundException.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/infra/configs/JooqAdapter.java
 /home/leandro/www/java/trade-fast/src/main/java/com/leandrosps/application/auth/TokenHandler.java
