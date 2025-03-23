@@ -6,32 +6,26 @@ import java.util.UUID;
 
 import com.leandrosps.domain.TradeOrder;
 import com.leandrosps.domain.User;
-import com.leandrosps.infra.configs.ConnectionCustom;
 
-public class UnityOfWorkDatabase implements Repositories {
+public class JooqUnityOfWorkDatabase implements Repositories {
 
-  Connection connection;
-  ConnectionCustom connectionCustom;
-  UserDAO userRepository;
+  private Connection connection = null;
+
+  private UserDAO userRepository;
   private TradeOrderRepo tradeOrderRepository;
 
-  public UnityOfWorkDatabase(
+  public JooqUnityOfWorkDatabase(
       UserDAO userRepository,
       TradeOrderRepo tradeRepository,
-      Connection connection,
-      ConnectionCustom connectionCustom) {
+      Connection connection) {
     this.connection = connection;
-    this.connectionCustom = connectionCustom;
     this.userRepository = userRepository;
     this.tradeOrderRepository = tradeRepository;
   }
 
   @Override
   public Repository<User, UUID> userRepository() {
-    if (userRepository != null) {
-      return this.userRepository;
-    }
-    return this.userRepository = UserRepoDatabase.getInstance(this.connection, this.connectionCustom);
+    return this.userRepository;
   }
 
   @Override
@@ -43,18 +37,20 @@ public class UnityOfWorkDatabase implements Repositories {
   }
 
   @Override
-  public void beginTransaction() {
+  public void begin() {
     try {
-      connection.setAutoCommit(false);
+      this.connection.setAutoCommit(false);
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to begin transaction", e);
+      throw new RuntimeException("Failed to start transaction", e);
     }
   }
 
   @Override
   public void commit() {
     try {
-      connection.commit();
+      if (connection != null) {
+        this.connection.commit();
+      }
     } catch (SQLException e) {
       throw new RuntimeException("Failed to commit transaction", e);
     }
@@ -63,7 +59,8 @@ public class UnityOfWorkDatabase implements Repositories {
   @Override
   public void rollback() {
     try {
-      connection.rollback();
+      System.out.println("Rolling back transaction");
+      this.connection.rollback();
     } catch (SQLException e) {
       throw new RuntimeException("Failed to rollback transaction", e);
     }

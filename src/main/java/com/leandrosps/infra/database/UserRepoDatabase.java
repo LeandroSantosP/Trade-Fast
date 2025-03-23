@@ -2,9 +2,7 @@ package com.leandrosps.infra.database;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.using;
 
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,43 +11,34 @@ import java.util.UUID;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 import com.leandrosps.domain.Roles;
 import com.leandrosps.domain.User;
 import com.leandrosps.exceptions.NotFoundException;
-import com.leandrosps.infra.configs.ConnectionCustom;
 
 public class UserRepoDatabase implements UserDAO {
 
    private DSLContext dslContext;
-   private ConnectionCustom connectionCustom;
 
-   private UserRepoDatabase(Connection connection, ConnectionCustom connectionCustom) {
-      dslContext = using(connection, SQLDialect.MYSQL);
-      this.connectionCustom = connectionCustom;
+   private UserRepoDatabase(DSLContext dslContext) {
+      this.dslContext = dslContext;
    }
 
    private Table<Record> USER_T = table("users");
 
    private static UserRepoDatabase instance = null;
 
-   public static UserRepoDatabase getInstance(Connection connection, ConnectionCustom connectionCustom) {
-      if (instance != null) {
-         return instance;
+   public static UserRepoDatabase getInstance(DSLContext dslContext) {
+      if (instance == null) {
+         instance = new UserRepoDatabase(dslContext);
       }
-      return new UserRepoDatabase(connection, connectionCustom);
+      return instance;
    }
 
    /* Mutaions */
    @Override
    public void persiste(User user) {
-      var roleByCustomRepo = this.connectionCustom.query("SELECT * FROM roles WHERE roles.value = ?",
-            user.getMajorRole());
-
-      System.out.println("ROLES: \n" + roleByCustomRepo);
-
       var roleResults = this.dslContext
             .select(field("id"))
             .from(table("roles"))

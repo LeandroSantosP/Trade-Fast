@@ -12,7 +12,6 @@ public class GetAssetsOrders {
    public GetAssetsOrders(TradeOrderRepo tradeOrderRepo) {
       this.tradeOrderRepo = tradeOrderRepo;
    }
-
    public List<GetAssetsOrdersOutput> execute(String asset_code) {
       return this.tradeOrderRepo.getOrdersByAccetCode(asset_code).stream().map(order -> {
          return new GetAssetsOrdersOutput(order.getId(), order.getAssetCode(), order.getType(), order.getQuantity(),

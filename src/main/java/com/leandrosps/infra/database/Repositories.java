@@ -9,7 +9,7 @@ public interface Repositories {
    Repository<User, UUID> userRepository();
    Repository<TradeOrder, UUID> tradeOrderRepository();
 
-   void beginTransaction();
+   void begin();
    void commit();
    void rollback();
  }

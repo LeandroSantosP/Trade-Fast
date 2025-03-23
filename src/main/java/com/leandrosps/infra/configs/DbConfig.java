@@ -6,14 +6,20 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
 
 import com.leandrosps.infra.utils.DbCredentails;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import static org.jooq.impl.DSL.using;
+
 public class DbConfig {
 
-   public DataSource getDataSource() {
+   private static Connection conn = null;
+
+   public static DataSource getDataSource() {
       HikariConfig config = new HikariConfig();
       config.setJdbcUrl(DbCredentails.URL);
       config.setUsername(DbCredentails.USER);
@@ -23,10 +29,15 @@ public class DbConfig {
       return new HikariDataSource(config);
    }
 
-   public Connection getConnection() {
-      Connection conn = null;
+   public DSLContext getDSLContext() {
+      return using(getConnection(), SQLDialect.MYSQL);
+   }
+   public static Connection getConnection() {
+      if (conn != null) {
+         return conn;
+      }
       try {
-         conn = this.getDataSource().getConnection();
+         conn = getDataSource().getConnection();
          System.out.println("Connection with success!");
       } catch (SQLException e) {
          System.out.println("Connection Faild");
@@ -35,9 +46,9 @@ public class DbConfig {
       return conn;
    }
 
-   public Flyway flyway() {
+   public static Flyway flyway() {
       Flyway flyway = Flyway.configure()
-            .dataSource(this.getDataSource())
+            .dataSource(getDataSource())
             .locations("classpath:db/migration")
             .load();
       flyway.migrate();

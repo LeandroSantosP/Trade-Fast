@@ -11,7 +11,6 @@ public class CreateOrderTrade {
    public CreateOrderTrade(TradeOrderRepo tradeOrderRepo) {
       this.tradeOrderRepo = tradeOrderRepo;
    }
-
    public void execute(CreateOrderTradeInput input) {
       var tradeOderToExec = TradeOrder.build(input.user_id(), input.assert_code(), input.type(), input.quantity(),
             input.price());
@@ -34,11 +33,11 @@ public class CreateOrderTrade {
              */
 
             var sellNewQuantity = sellOrder.getQuantity() - remainAccetsToBuy;
-            
+
             if (tradeOderToExec.getPrice().compareTo(sellOrder.getPrice()) >= 0) {
-               
+
                remainAccetsToBuy -= sellOrder.getQuantity();
-   
+
                if (remainAccetsToBuy < 0) {
                   remainAccetsToBuy = 0;
                }
